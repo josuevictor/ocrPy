@@ -1,0 +1,32 @@
+version: "3.8"
+services:
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
+  ocr-api:
+    build: ./api
+    container_name: ocr-api
+    restart: unless-stopped
+    volumes:
+      - ./storage:/app/storage
+    ports:
+      - "8000:8000"
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - redis
+
+  ocr-worker:
+    build: ./api
+    container_name: ocr-worker
+    command: ["python", "worker.py"]
+    restart: unless-stopped
+    volumes:
+      - ./storage:/app/storage
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - redis
