@@ -14,7 +14,6 @@ STORAGE_DIR = "/app/storage"
 os.makedirs(STORAGE_DIR, exist_ok=True)
 
 def enqueue_job(input_path, output_path):
-    # job function name (worker imports a callable)
     return q.enqueue("worker.process_file", input_path, output_path)
 
 @app.post("/upload")
@@ -22,7 +21,6 @@ async def upload(file: UploadFile = File(...)):
     if not file.filename:
         raise HTTPException(status_code=400, detail="Arquivo inválido")
 
-    # limitar por segurança (ex: 200MB)
     contents = await file.read()
     if len(contents) == 0:
         raise HTTPException(status_code=400, detail="Arquivo vazio")

@@ -13,7 +13,7 @@ def process_file(input_path, output_path):
         "ocrmypdf",
         "--force-ocr",
         "--deskew",
-        "--optimize", "3",
+        "pgquant",
         input_full,
         output_full
     ]
