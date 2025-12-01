@@ -4,3 +4,4 @@ rq
 redis
 ocrmypdf
 python-multipart
+Pillow

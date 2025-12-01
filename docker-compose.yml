@@ -1,4 +1,5 @@
 version: "3.8"
+
 services:
   redis:
     image: redis:7-alpine
@@ -16,14 +17,12 @@ services:
       - "8000:8000"
     environment:
       - REDIS_URL=redis://redis:6379/0
-    depends_on:
-      - redis
 
   ocr-worker:
     build: ./api
     container_name: ocr-worker
-    command: ["python", "worker.py"]
     restart: unless-stopped
+    command: ["python", "worker.py"]
     volumes:
       - ./storage:/app/storage
     environment:
