@@ -5,3 +5,4 @@ redis
 ocrmypdf
 python-multipart
 Pillow
+opencv-python
